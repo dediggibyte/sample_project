@@ -1,4 +1,3 @@
-# .github/workflows/deploy.yml
 name: Build and Deploy Databricks Bundle
 
 on:
@@ -21,27 +20,29 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Databricks CLI (v2 Public Preview with bundle)
+      - name: Install PEP 517 build tool
         run: |
-          # Download & install the standalone CLI binary (v0.205+)
+          pip install --upgrade pip
+          pip install build
+
+      - name: Install Databricks CLI v2 (Public Preview with bundle)
+        run: |
           curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sudo sh
 
       - name: Verify Databricks CLI Installation
         run: |
-          echo "Which databricks binary?"
-          which databricks
           echo "Databricks CLI version:"
           databricks --version
           echo "Bundle commands available:"
           databricks bundle --help
 
-      - name: Validate Databricks Bundle for Dev target
+      - name: Validate Databricks Bundle
         run: databricks bundle validate
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
 
-      - name: Deploy Databricks Bundle to Dev target
+      - name: Deploy Databricks Bundle to Dev
         run: databricks bundle deploy -t dev
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}

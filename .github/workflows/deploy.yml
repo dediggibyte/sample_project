@@ -25,7 +25,7 @@ jobs:
         run: |
           pip install --upgrade pip
           # Install a version that includes `bundle`
-          pip install --upgrade "databricks-cli>=0.223.2"
+          pip install --upgrade "databricks-cli>=0.18.0"
 
       - name: Verify Databricks CLI Installation
         run: |

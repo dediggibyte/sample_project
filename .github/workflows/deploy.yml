@@ -42,7 +42,7 @@ jobs:
       # --- REMAINING STEPS (Unchanged) ---
       - name: Validate Databricks Bundle for Dev target
         # The -t flag specifies which target in databricks.yml to use
-        run: databricks bundle validate -t dev
+        run: databricks bundle validate
         env:
           # Provide Databricks credentials via GitHub Secrets
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}

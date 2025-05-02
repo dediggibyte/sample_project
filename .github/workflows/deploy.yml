@@ -21,19 +21,18 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Databricks CLI
+      - name: Install Databricks CLI (v2 Public Preview with bundle)
         run: |
-          pip install --upgrade pip
-          # Install a version that includes `bundle`
-          pip install --upgrade "databricks-cli>=0.18.0"
+          # Download & install the standalone CLI binary (v0.205+)
+          curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sudo sh
 
       - name: Verify Databricks CLI Installation
         run: |
-          echo "--- Which databricks is being used? ---"
+          echo "Which databricks binary?"
           which databricks
-          echo "--- Databricks CLI version ---"
+          echo "Databricks CLI version:"
           databricks --version
-          echo "--- Bundle commands available? ---"
+          echo "Bundle commands available:"
           databricks bundle --help
 
       - name: Validate Databricks Bundle for Dev target

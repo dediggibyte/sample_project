@@ -4,47 +4,41 @@ name: Build and Deploy Databricks Bundle
 on:
   push:
     branches:
-      - main # Or your primary branch (e.g., master)
-  workflow_dispatch: # Allows manual triggering
+      - main
+  workflow_dispatch:
 
 jobs:
   deploy-bundle:
     name: Validate and Deploy Bundle to Dev
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # Use latest checkout action
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10' # Match requires-python or choose appropriate
+          python-version: '3.10'
 
-      # --- MODIFIED STEP ---
-      # Tries to uninstall any existing version first, then installs a specific newer version
-      - name: Uninstall Old and Install New Databricks CLI
+      - name: Install Databricks CLI
         run: |
-          pip uninstall databricks-cli -y || echo "databricks-cli not previously installed or uninstall failed"
           pip install --upgrade pip
-          pip install databricks-cli>==0.223.2 # Ensures a version with 'bundle' command
+          # Install a version that includes `bundle`
+          pip install --upgrade "databricks-cli>=0.223.2"
 
-      # --- NEW STEP ---
-      # Verifies the installation path and version
       - name: Verify Databricks CLI Installation
         run: |
-          echo "--- Checking which databricks is in PATH ---"
+          echo "--- Which databricks is being used? ---"
           which databricks
-          echo "--- Checking databricks version ---"
+          echo "--- Databricks CLI version ---"
           databricks --version
-          echo "--- Checking pip package details ---"
-          pip show databricks-cli
+          echo "--- Bundle commands available? ---"
+          databricks bundle --help
 
-      # --- REMAINING STEPS (Unchanged) ---
       - name: Validate Databricks Bundle for Dev target
-        # The -t flag specifies which target in databricks.yml to use
         run: databricks bundle validate
         env:
-          # Provide Databricks credentials via GitHub Secrets
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
 

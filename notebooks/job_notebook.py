@@ -10,7 +10,7 @@ print("Starting notebook execution...")
 # Import functions from the library installed as a wheel
 # The package name 'src' comes from pyproject.toml
 try:
-    from src.main import get_greeting, add_numbers
+    from sample_project.main import get_greeting, add_numbers
     print("Successfully imported from mylibrary")
 except ImportError as e:
     print(f"Error importing from mylibrary: {e}")

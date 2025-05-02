@@ -1,52 +1,38 @@
 # databricks.yml
 bundle:
-  # Use a name specific to your project
   name: sample-job-bundle
 
-# Define deployment targets (e.g., dev, staging, prod)
 targets:
   dev:
-    # 'production' mode builds/uploads artifacts rather than syncing files
     mode: production
-    # Define the Databricks workspace connection details
-    workspace:
-      # Use environment variables provided by GitHub Actions secrets
-      host: ${env.DATABRICKS_HOST}
-    # Authentication uses DATABRICKS_HOST/DATABRICKS_TOKEN env vars by default
-    # Set root_path if you want bundle deployed to a specific workspace path
-    # root_path: /Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+    # Don’t interpolate here—Databricks CLI v2 will pick up DATABRICKS_HOST/TOKEN
+    # from the environment automatically.
+    workspace: {}
 
-# Define artifacts to be built
 artifacts:
   my_library_wheel:
     type: whl
-    # Path to the directory containing pyproject.toml
     path: .
 
-# Define Databricks resources managed by this bundle
 resources:
   jobs:
-    my_notebook_job: # A unique key for this job within the bundle
-      # Name displayed in the Databricks Jobs UI
+    my_notebook_job:
       name: "Sample Notebook Job (Bundle Deployed)"
+
+      # Define your clusters at the job level...
+      job_clusters:
+        default_cluster:
+          new_cluster:
+            spark_version: "16.3.x-scala2.12"
+            node_type_id: "Standard_DS3_v2"
+            num_workers: 1
+
+      # ...and reference them in each task by key
       tasks:
-        - task_key: "run_notebook_using_library"
-          # Define the notebook task details
+        - task_key: run_notebook_using_library
           notebook_task:
-            # Path relative to this databricks.yml file
             notebook_path: ./notebooks/job_notebook.py
-            source: WORKSPACE # Indicates the notebook source is in the workspace
-          # Specify the library to install on the cluster
+            source: WORKSPACE
           libraries:
-            # Reference the wheel artifact built by the bundle process.
-            # The path is relative to the bundle's root in the workspace.
-            # Using a wildcard accounts for the version number in the filename.
             - whl: ./dist/mylibrary-*.whl
-          # Define the cluster to run this task on
-          job_clusters:
-            - job_cluster_key: "default_cluster"
-              new_cluster:
-                # Choose a suitable Spark version and node type
-                spark_version: "16.3.x-scala2.12" # As of May 2025, check for current LTS
-                node_type_id: "Standard_DS3_v2"      # Choose based on your needs/cost
-                num_workers: 1                 # Start with 1 worker for simple jobs
+          job_cluster_key: default_cluster

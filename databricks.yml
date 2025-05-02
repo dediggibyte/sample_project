@@ -1,13 +1,14 @@
 # databricks.yml
+
 bundle:
   name: sample-job-bundle
 
 targets:
   dev:
     mode: production
-    # Don’t interpolate here—Databricks CLI v2 will pick up DATABRICKS_HOST/TOKEN
-    # from the environment automatically.
-    workspace: {}
+    workspace:
+      # Ensure only one copy is deployed under your user’s folder
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
 
 artifacts:
   my_library_wheel:
@@ -19,15 +20,14 @@ resources:
     my_notebook_job:
       name: "Sample Notebook Job (Bundle Deployed)"
 
-      # Define your clusters at the job level...
+      # Must be a list of cluster definitions
       job_clusters:
-        default_cluster:
+        - job_cluster_key: default_cluster
           new_cluster:
             spark_version: "16.3.x-scala2.12"
             node_type_id: "Standard_DS3_v2"
             num_workers: 1
 
-      # ...and reference them in each task by key
       tasks:
         - task_key: run_notebook_using_library
           notebook_task:

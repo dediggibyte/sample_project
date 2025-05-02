@@ -20,9 +20,26 @@ jobs:
         with:
           python-version: '3.10' # Match requires-python or choose appropriate
 
-      - name: Install Databricks CLI
-        run: pip install --upgrade pip && pip install --upgrade databricks-cli
+      # --- MODIFIED STEP ---
+      # Tries to uninstall any existing version first, then installs a specific newer version
+      - name: Uninstall Old and Install New Databricks CLI
+        run: |
+          pip uninstall databricks-cli -y || echo "databricks-cli not previously installed or uninstall failed"
+          pip install --upgrade pip
+          pip install databricks-cli>=0.210.0 # Ensures a version with 'bundle' command
 
+      # --- NEW STEP ---
+      # Verifies the installation path and version
+      - name: Verify Databricks CLI Installation
+        run: |
+          echo "--- Checking which databricks is in PATH ---"
+          which databricks
+          echo "--- Checking databricks version ---"
+          databricks --version
+          echo "--- Checking pip package details ---"
+          pip show databricks-cli
+
+      # --- REMAINING STEPS (Unchanged) ---
       - name: Validate Databricks Bundle for Dev target
         # The -t flag specifies which target in databricks.yml to use
         run: databricks bundle validate -t dev

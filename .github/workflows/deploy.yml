@@ -21,7 +21,7 @@ jobs:
           python-version: '3.10' # Match requires-python or choose appropriate
 
       - name: Install Databricks CLI
-        run: pip install databricks-cli
+        run: pip install --upgrade pip && pip install --upgrade databricks-cli
 
       - name: Validate Databricks Bundle for Dev target
         # The -t flag specifies which target in databricks.yml to use

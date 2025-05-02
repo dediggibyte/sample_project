@@ -34,5 +34,5 @@ resources:
             notebook_path: ./notebooks/job_notebook.py
             source: WORKSPACE
           libraries:
-            - whl: ./dist/mylibrary-*.whl
+            - whl: ./dist/*.whl
           job_cluster_key: default_cluster

@@ -26,7 +26,7 @@ jobs:
         run: |
           pip uninstall databricks-cli -y || echo "databricks-cli not previously installed or uninstall failed"
           pip install --upgrade pip
-          pip install databricks-cli>=0.210.0 # Ensures a version with 'bundle' command
+          pip install databricks-cli>==0.223.2 # Ensures a version with 'bundle' command
 
       # --- NEW STEP ---
       # Verifies the installation path and version

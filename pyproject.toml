@@ -1,0 +1,33 @@
+# pyproject.toml
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sample-python-project"
+version = "0.1.0"
+description = "A simple example library using pyproject.toml"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    { name = "Nivethan Venkatachalam", email = "nivethan.venkatachalam@diggibyte.com" },
+]
+keywords = ["example", "databricks", "library"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    # Add runtime dependencies here if any
+    # 'requests>=2.20.0',
+]
+
+[project.urls]
+Homepage = "https://github.com/dediggibyte/sample_project" # Update with your repo URL
+Repository = "https://github.com/dediggibyte/sample_project.git" # Update with your repo URL

@@ -1,0 +1,34 @@
+{
+  "evaluation": {
+    "source": {
+      "name": "revenue",
+      "display": "revenue",
+      "aggregation": "SUM"
+    },
+    "comparison_operator": "LESS_THAN",
+    "threshold": {
+      "value": {
+        "double_value": 5.0
+      }
+    },
+    "notification": {
+      "retrigger_seconds": 0,
+      "notify_on_ok": true
+    }
+  },
+  "schedule": {
+    "quartz_cron_schedule": "58 14 */1 * * ?",
+    "timezone_id": "UTC"
+  },
+  "query_lines": [
+    "SELECT",
+    "  to_date(sale_timestamp) as date,",
+    "  SUM(total_revenue) as revenue",
+    "FROM",
+    "  `customer_sales`.`gold_sales`.`daily_sales_summary`",
+    "GROUP BY",
+    "  ALL",
+    "ORDER BY",
+    "  1 DESC"
+  ]
+}

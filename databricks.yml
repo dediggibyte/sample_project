@@ -22,7 +22,7 @@ resources:
       performance_target: PERFORMANCE_OPTIMIZED
 
       tasks:
-        - task_key: run_notebook_using_library
+        - task_key: notebook_task
           notebook_task:
             notebook_path: ./notebooks/job_notebook.py
             source: WORKSPACE

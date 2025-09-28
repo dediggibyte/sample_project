@@ -18,7 +18,7 @@ artifacts:
 resources:
   jobs:
     my_notebook_job:
-      name: "Sample Notebook Job (Bundle Deployed)"
+      name: "Job (Bundle Deployed) - Pipeline and Notebook Taask"
       performance_target: PERFORMANCE_OPTIMIZED
 
       tasks:

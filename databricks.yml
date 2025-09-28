@@ -21,14 +21,6 @@ resources:
       name: "Sample Notebook Job (Bundle Deployed)"
       performance_target: PERFORMANCE_OPTIMIZED
 
-      # Define clusters as a list
-      job_clusters:
-        - job_cluster_key: default_cluster
-          new_cluster:
-            spark_version: "16.3.x-scala2.12"
-            node_type_id: "Standard_DS3_v2"
-            num_workers: 1
-
       tasks:
         - task_key: run_notebook_using_library
           notebook_task:
@@ -36,4 +28,4 @@ resources:
             source: WORKSPACE
           libraries:
             - whl: ./dist/*.whl
-          job_cluster_key: default_cluster
+          job_cluster_key: Serverless

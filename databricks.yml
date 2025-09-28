@@ -26,3 +26,18 @@ resources:
           notebook_task:
             notebook_path: ./notebooks/job_notebook.py
             source: WORKSPACE
+
+      pipelines:
+        pipeline_dlt_sink:
+          name: DLT Sink
+          libraries:
+            - glob:
+                include: /Workspace/Users/nivethan.venkatachalam@diggibyte.com/New Pipeline
+                  2025-09-14 22:10/transformations/**
+          schema: sap
+          photon: true
+          catalog: 0__silver
+          serverless: true
+          root_path: /Workspace/Users/nivethan.venkatachalam@diggibyte.com/New Pipeline
+            2025-09-14 22:10
+

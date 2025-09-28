@@ -28,4 +28,3 @@ resources:
             source: WORKSPACE
           libraries:
             - whl: ./dist/*.whl
-          job_cluster_key: Serverless

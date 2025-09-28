@@ -19,6 +19,7 @@ resources:
   jobs:
     my_notebook_job:
       name: "Sample Notebook Job (Bundle Deployed)"
+      performance_target: PERFORMANCE_OPTIMIZED
 
       # Define clusters as a list
       job_clusters:

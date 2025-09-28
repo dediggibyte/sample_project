@@ -26,5 +26,3 @@ resources:
           notebook_task:
             notebook_path: ./notebooks/job_notebook.py
             source: WORKSPACE
-          libraries:
-            - whl: ./dist/*.whl

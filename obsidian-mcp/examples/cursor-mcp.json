@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "obsidian": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory",
+        "/ABSOLUTE/PATH/TO/this/repo/obsidian-mcp",
+        "obsidian-mcp"
+      ],
+      "env": {
+        "OBSIDIAN_MODE": "filesystem",
+        "OBSIDIAN_VAULT_PATH": "/ABSOLUTE/PATH/TO/your/ObsidianVault"
+      }
+    }
+  }
+}

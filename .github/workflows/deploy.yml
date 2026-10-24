@@ -9,7 +9,7 @@ on:
 jobs:
   deploy-bundle:
     name: Validate and Deploy Bundle to Dev
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
